@@ -75,7 +75,7 @@ def input_students
         puts "No students available".center(@width)
     else
         puts "Student names beginning with: (Please enter a letter)".center(@width)
-        letter = gets.chomp
+        letter = gets.strip
         number_of_matches = 0
         @students.each do |student|
           if student[:name].start_with?(letter.upcase, letter.downcase)
@@ -96,7 +96,7 @@ def input_students
         puts "No students available".center(@width)
       else
         puts "Names with maximum characters of: (Please enter a number)".center(@width)
-        max_length = gets.chomp
+        max_length = gets.strip
         number_of_matches = 0
         @students.each do |student|
           if student[:name].length <= max_length.to_i
