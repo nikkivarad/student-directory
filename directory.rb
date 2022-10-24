@@ -22,11 +22,11 @@ def input_students
     puts "-------------"
   end
   
- # 8.4 (formerly 8.1) - Rewrite print method using a while loop (already did this earlier...)
+ # 8.4  - Rewrite print method using a while loop (already did this earlier...)
   def print(students)
     i = 0
     while i < students.count
-    puts "#{students[i][:name]} (#{students[i][:cohort]})"
+    puts "#{i + 1}.#{students[i][:name]} (#{students[i][:cohort]})"
     i += 1
     end
   end
