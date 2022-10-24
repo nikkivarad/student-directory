@@ -118,7 +118,7 @@ def input_students
   end
   
  # 8.75 - adding empty criteria
-  def print(students)
+ def print_student_list(students)
     if students.empty?
         puts "No students available".center(@width)
       else
@@ -130,7 +130,23 @@ def input_students
     end
   end
   
-# 8.75 - add empty criteria
+  def print_student_list_by_cohort(students)
+    if @students.empty?
+      puts "No students available".center(@width)
+    else
+      cohorts = @students.map do |student|
+        student[:cohort]
+      end
+      cohorts.uniq.each do |cohort|
+        puts "#{cohort} cohort".upcase.center(@width)
+          @students.each do |student|
+            puts student[:name] if student[:cohort] == cohort
+          end
+      end
+    end
+  end
+
+  #8.2
   def print_by_first_letter(students)
     if @students.empty?
         puts "No students available".center(@width)
@@ -182,5 +198,5 @@ end
 # Call the methods
 @students = input_students
 print_header
-print(@students)
+print_student_list_by_cohort(@students) 
 print_footer(@students)
