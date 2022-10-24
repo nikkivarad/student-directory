@@ -1,3 +1,9 @@
+# 8.9 Helpers
+
+def pluralize_students(n)
+    if n == 1 then "#{n} great student" else "#{n} great students" end
+end
+
 # 8.6 Add method to center strings (8.6)
 @width = 50
 
@@ -91,7 +97,7 @@ def input_students
       country_of_birth = gets.chomp
       hobbies = add_hobbies
       @students << { name: name, cohort: cohort.to_sym, country_of_birth: country_of_birth, hobbies: hobbies }
-      puts "Now we have #{@students.count} students".center(@width)
+      puts "Now we have #{pluralize_students @students.count}".center(@width)      
       continue = create_new_student
     end
     @students
@@ -162,7 +168,7 @@ def input_students
           end  
         end
         puts
-        puts "We have #{number_of_matches} students whose name begins with #{letter}".center(@width)
+        puts "We have #{pluralize_students @students.count} whose name begins with #{letter}".center(@width)
         puts
       end
     end
@@ -183,7 +189,7 @@ def input_students
           end  
         end
         puts
-        puts "We have #{number_of_matches} students with a name of maximum #{max_length} characters".center(@width)
+        puts "We have #{pluralize_students @students.count} with a name of maximum #{max_length} characters".center(@width)
         puts
     end
 end
@@ -198,5 +204,5 @@ end
 # Call the methods
 @students = input_students
 print_header
-print_student_list_by_cohort(@students) 
+print_student_list(@students) 
 print_footer(@students)
