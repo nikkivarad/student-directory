@@ -26,7 +26,7 @@ def input_students
       puts "Please enter the country of birth".center(@width)
       country_of_birth = gets.chomp
       hobbies = add_hobbies
-      students << { name: name, cohort: cohort, country_of_birth: country_of_birth, hobbies: hobbies }
+      students << { name: name, cohort: cohort.to_sym, country_of_birth: country_of_birth, hobbies: hobbies }
       puts "Now we have #{students.count} students".center(@width)
       continue = create_new_student
     end
