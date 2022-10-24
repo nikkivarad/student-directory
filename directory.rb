@@ -196,9 +196,9 @@ end
 
   def print_footer(students)
     if !@students.empty?
-      puts "Overall, we have #{@students.count} great students".center(@width)
-      else
-      end
+      puts "Overall, we have #{pluralize_students @students.count}".center(@width)      
+    else
+    end
   end
 
 # Call the methods
