@@ -24,46 +24,79 @@ end
   November: 0,
   December: 8
 }
-def interactive_menu
+def interactive_main_menu
     students = []
     loop do
-      print_menu
-      process(STDIN.gets.chomp)
+      print_main_menu
+      process_main_menu(STDIN.gets.chomp)
     end
 end
 
-def print_menu
+def interactive_search_menu
+    loop do
+      print_search_menu
+      process_search_menu(STDIN.gets.chomp)
+    end
+end
+
+def print_main_menu
+  puts
   puts "1.  Input the students"
   puts "2.  Show the students"
-  puts "3.  Save the list to students.csv"
-  puts "4.  Load the list from students.csv"
-  puts "9.  Exit"  #9 because we'll be adding more items
+  puts "3.  Search the students"
+  puts "4.  Save the list to students.csv"
+  puts "5.  Load the list from students.csv"
+  puts "9.  Exit"  
+  puts
 end
 
-def show_students
-  print_header
-  print_students_list
-  print_footer
+def print_search_menu
+    puts
+    puts "Student Search:"
+    puts "1. Search by First Letter"
+    puts "2. Search by Name Length"
+    puts "3. Back to Main Menu"
+    puts
+end
+  
+def process_search_menu(selection)
+    case selection
+    when "1"
+      search_by_first_letter
+    when "2"
+      search_by_name_length
+    when "3"
+      interactive_main_menu
+    else
+      puts "I don't know what you meant, please try again"
+    end
 end
 
-def process(selection)
+def process_main_menu(selection)
   case selection
   when "1"
     input_students
   when "2"
     show_students
   when "3"
-    save_students
+    interactive_search_menu
   when "4"
+    save_students
+  when "5"
     load_students
   when "9"
-    exit  #this will cause the program to terminate
+    exit #this will cause the program to terminate
   else
     puts "I don't know what you meant, please try again"
   end
 end
 
-# 8.5 Enrich the student information with country and hobbies
+def show_students
+    print_header
+    print_students_list
+    print_footer
+end
+
 def create_new_student
     puts "Do you want to create a new student? (y/n)".center(@width)
     continue = STDIN.gets.chomp.downcase
@@ -279,4 +312,4 @@ end
 
 #call the interactive menu
 try_load_students
-interactive_menu
+interactive_main_menu
