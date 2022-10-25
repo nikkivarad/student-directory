@@ -36,6 +36,7 @@ def print_menu
   puts "1.  Input the students"
   puts "2.  Show the students"
   puts "3.  Save the list to students.csv"
+  puts "4.  Load the list from students.csv"
   puts "9.  Exit"  #9 because we'll be adding more items
 end
 
@@ -53,6 +54,8 @@ def process(selection)
     show_students
   when "3"
     save_students
+  when "4"
+    load_students
   when "9"
     exit  #this will cause the program to terminate
   else
@@ -146,7 +149,7 @@ def input_students
       hobbies << hobby
       hobby = gets.chomp
     end
-    hobbies
+    hobbies.join(" ")
   end
 
   def save_students
@@ -154,13 +157,22 @@ def input_students
     file = File.open("students.csv", "w")
     # iterate over the array of students
     @students.each do |student|
-      student_data = [student[:name], student[:cohort], student[:country_of_birth], student[:hobbies].join(" ")]
+      student_data = [student[:name], student[:cohort], student[:country_of_birth], student[:hobbies]]
       csv_line = student_data.join(",")
       file.puts csv_line
     end
     file.close
   end
-
+  
+  def load_students
+    file = File.open("students.csv", "r")
+    file.readlines.each do |line|
+    name, cohort, country_of_birth, hobbies = line.chomp.split(',')
+      @students << {name: name, cohort: cohort.to_sym, country_of_birth: country_of_birth, hobbies: hobbies}
+    end
+    file.close
+  end
+  
   def print_header
     if !@students.empty?
         puts "The students of Villains Academy".center(@width)
