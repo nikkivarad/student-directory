@@ -134,7 +134,7 @@ def input_students
       puts "Please enter the country of birth".center(@width)
       country_of_birth = STDIN.gets.chomp
       hobbies = add_hobbies
-      @students << { name: name, cohort: cohort.to_sym, country_of_birth: country_of_birth, hobbies: hobbies }
+      add_student(name, cohort, country_of_birth, hobbies)
       puts "Now we have #{pluralize_students @students.count}".center(@width)      
       continue = create_new_student
     end
@@ -150,6 +150,10 @@ def input_students
       hobby = STDIN.gets.chomp
     end
     hobbies.join(" ")
+  end
+
+  def add_student(name, cohort, country_of_birth, hobbies)
+    @students << {name: name, cohort: cohort.to_sym, country_of_birth: country_of_birth, hobbies: hobbies}
   end
 
   def save_students
@@ -168,7 +172,7 @@ def input_students
     file = File.open(filename, "r")
     file.readlines.each do |line|
     name, cohort, country_of_birth, hobbies = line.chomp.split(',')
-      @students << {name: name, cohort: cohort.to_sym, country_of_birth: country_of_birth, hobbies: hobbies}
+      add_student(name, cohort, country_of_birth, hobbies)
     end
     file.close
   end
