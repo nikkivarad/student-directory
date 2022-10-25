@@ -1,5 +1,5 @@
-# 8.9 Helpers
-
+# 8.9 
+# helpers
 def pluralize_students(n)
     if n == 1 then "#{n} great student" else "#{n} great students" end
 end
@@ -8,7 +8,7 @@ end
 @width = 50
 
 # 8.7
-@students = []
+@students = [] # an empty array accessible to all methods
 
 @cohorts = {
   January: 15,
@@ -24,31 +24,38 @@ end
   November: 0,
   December: 8
 }
-
 def interactive_menu
     students = []
     loop do
-      # 1. print the menu and ask the user what to do
-      puts "1.  Input the students"
-      puts "2.  Show the students"
-      puts "9.  Exit"  #9 because we'll be adding more items
-      # 2. read the input and save it into a variable
-      selection = gets.chomp
-      # 3. do what the user has asked
-      case selection
-      when "1"
-        students = input_students
-      when "2"
-        print_header
-        print_student_list(students)
-        print_footer(students)
-      when "9"
-        exit  #this will cause the program to terminate
-      else
-        puts "I don't know what you meant, please try again"
-      end
+      print_menu
+      process(gets.chomp)
     end
+end
+
+def print_menu
+  puts "1.  Input the students"
+  puts "2.  Show the students"
+  puts "9.  Exit"  #9 because we'll be adding more items
+end
+
+def show_students
+  print_header
+  print_students_list(@students)
+  print_footer(@students)
+end
+
+def process(selection)
+  case selection
+  when "1"
+    input_students
+  when "2"
+    show_students
+  when "9"
+    exit  #this will cause the program to terminate
+  else
+    puts "I don't know what you meant, please try again"
   end
+end
 
 # 8.5 Enrich the student information with country and hobbies
 def create_new_student
@@ -125,7 +132,6 @@ def input_students
       puts "Now we have #{pluralize_students @students.count}".center(@width)      
       continue = create_new_student
     end
-    @students
   end
   
   def add_hobbies
@@ -148,8 +154,7 @@ def input_students
     end
   end
   
- # 8.75 - adding empty criteria
- def print_student_list(students)
+def print_students_list(students)
     if students.empty?
         puts "No students available".center(@width)
       else
@@ -161,7 +166,7 @@ def input_students
     end
   end
   
-  def print_student_list_by_cohort(students)
+  def print_students_list_by_cohort(students)
     if @students.empty?
       puts "No students available".center(@width)
     else
