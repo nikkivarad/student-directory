@@ -28,7 +28,7 @@ def interactive_menu
     students = []
     loop do
       print_menu
-      process(gets.chomp)
+      process(STDIN.gets.chomp)
     end
 end
 
@@ -66,7 +66,7 @@ end
 # 8.5 Enrich the student information with country and hobbies
 def create_new_student
     puts "Do you want to create a new student? (y/n)".center(@width)
-    continue = gets.chomp.downcase
+    continue = STDIN.gets.chomp.downcase
     if continue == "y"
       return true
     elsif continue == "n"
@@ -89,7 +89,7 @@ def add_cohort
   end
   puts
   puts "Please enter the month number of the cohort would like to join".center(@width)
-  cohort = gets.chomp
+  cohort = STDIN.gets.chomp
   case cohort
   when "1"
     cohort = :January
@@ -128,11 +128,11 @@ def input_students
     continue = create_new_student
     while continue
       puts "Please enter the name of the student".center(@width)
-      name = gets.chomp
+      name = STDIN.gets.chomp
       puts "Please enter the cohort".center(@width)
       cohort = add_cohort
       puts "Please enter the country of birth".center(@width)
-      country_of_birth = gets.chomp
+      country_of_birth = STDIN.gets.chomp
       hobbies = add_hobbies
       @students << { name: name, cohort: cohort.to_sym, country_of_birth: country_of_birth, hobbies: hobbies }
       puts "Now we have #{pluralize_students @students.count}".center(@width)      
@@ -144,10 +144,10 @@ def input_students
     hobbies = []
     puts "Please enter student's hobbies".center(@width)
     puts "(To finish, just hit return twice)".center(@width)
-    hobby = gets.chomp
+    hobby = STDIN.gets.chomp
     while !hobby.empty?
       hobbies << hobby
-      hobby = gets.chomp
+      hobby = STDIN.gets.chomp
     end
     hobbies.join(" ")
   end
@@ -164,8 +164,8 @@ def input_students
     file.close
   end
   
-  def load_students
-    file = File.open("students.csv", "r")
+  def load_students(filename = "students.csv")
+    file = File.open(filename, "r")
     file.readlines.each do |line|
     name, cohort, country_of_birth, hobbies = line.chomp.split(',')
       @students << {name: name, cohort: cohort.to_sym, country_of_birth: country_of_birth, hobbies: hobbies}
@@ -173,6 +173,18 @@ def input_students
     file.close
   end
   
+  def try_load_students
+    filename = ARGV.first     # first argument from the command line
+    return if filename.nil?   # get out of the method if it isn't given
+    if File.exists?(filename) # if it exists
+      load_students(filename)
+        puts "Loaded #{@students.count} from #{filename}".center(@width)
+    else      # if it doesn't exist
+      puts "Sorry, #{filename} doesn't exist."
+      exit    # quit the program
+    end
+  end
+
   def print_header
     if !@students.empty?
         puts "The students of Villains Academy".center(@width)
@@ -258,4 +270,5 @@ end
   end
 
 #call the interactive menu
+try_load_students
 interactive_menu
