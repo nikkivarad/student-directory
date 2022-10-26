@@ -212,26 +212,24 @@ def input_students
     puts "Please enter the filename (eg. data.csv)"
     filename = gets.chomp
     # open the file for writing
-    file = File.open("students.csv", "w")
+    file = File.open(filename, "w") do |file|
     # iterate over the array of students
     @students.each do |student|
       student_data = [student[:name], student[:cohort], student[:country_of_birth], student[:hobbies]]
       csv_line = student_data.join(",")
       file.puts csv_line
     end
-    file.close
     puts
-    puts "*** Saved successfully to #{filename} ***"
+    puts  "*** Saved successfully to #{filename} ***"
     puts
   end
   
   def load_students(filename = @default_filename)
-    file = File.open(filename, "r")
-    file.readlines.each do |line|
-    name, cohort, country_of_birth, hobbies = line.chomp.split(',')
+    file = File.open(filename, "r") do |file|
+      file.readlines.each do |line|
+      name, cohort, country_of_birth, hobbies = line.chomp.split(',')
       add_student(name, cohort, country_of_birth, hobbies)
     end
-    file.close
     puts
     puts  "*** File loaded successfully ***"
     puts  "*** Using: #{filename}"
