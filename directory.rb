@@ -1,4 +1,6 @@
-# 8.7
+@loaded_filename = ""
+@default_filename = "students.csv"
+
 @students = [] # an empty array accessible to all methods
 
 @cohorts = {
@@ -16,6 +18,7 @@
   December: 8
 }
 
+
 #helpers
 def pluralize_students(n)
   if n == 1 then "#{n} great student" else "#{n} great students" end
@@ -27,15 +30,13 @@ def divider
   puts "-------------".center(@width)
 end
 
-@loaded_filename = ""
-@default_filename = "students.csv"
-
 def header_menu
   divider
   puts "-- Student Directory".center(@width)
   puts "-- Using file: #{@loaded_filename}".center(@width)
   divider
 end
+
 
 def interactive_main_menu
     loop do
@@ -50,6 +51,7 @@ def interactive_search_menu
       process_search_menu(STDIN.gets.chomp)
     end
 end
+
 
 def print_main_menu
   header_menu
@@ -73,6 +75,7 @@ def print_search_menu
     puts
 end
   
+
 def process_search_menu(selection)
     case selection
     when "1"
@@ -110,11 +113,13 @@ def process_main_menu(selection)
   end
 end
 
+
 def show_students
     print_header
     print_students_list
     print_footer
 end
+
 
 def create_new_student
     puts "Do you want to create a new student? (y/n)".center(@width)
@@ -128,6 +133,7 @@ def create_new_student
     end
     create_new_student
   end
+
 
 def add_cohort
   next_cohort = :December
@@ -181,7 +187,6 @@ def input_students
     while continue
       puts "Please enter the name of the student".center(@width)
       name = STDIN.gets.chomp
-      puts "Please enter the cohort".center(@width)
       cohort = add_cohort
       puts "Please enter the country of birth".center(@width)
       country_of_birth = STDIN.gets.chomp
