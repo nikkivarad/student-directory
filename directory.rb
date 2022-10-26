@@ -24,7 +24,7 @@ require 'csv'
 
 #helpers
 def pluralize_students(n)
-  if n == 1 then "#{n} great student" else "#{n} great students" end
+  n == 1 ? "#{n} great student" : "#{n} great students"
 end
 
 @width = 50
@@ -193,11 +193,11 @@ def add_cohort
   when "8"
     cohort = :August
   when "9"
-    cohort = :December
+    cohort = :September
   when "10"
-    cohort = :December
+    cohort = :October
   when "11"
-    cohort = :December
+    cohort = :November
   when "12"
     cohort = :December
   when ""
