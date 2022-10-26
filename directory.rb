@@ -1,12 +1,3 @@
-# 8.9 
-# helpers
-def pluralize_students(n)
-    if n == 1 then "#{n} great student" else "#{n} great students" end
-end
-
-# 8.6 Add method to center strings (8.6)
-@width = 50
-
 # 8.7
 @students = [] # an empty array accessible to all methods
 
@@ -24,6 +15,28 @@ end
   November: 0,
   December: 8
 }
+
+#helpers
+def pluralize_students(n)
+  if n == 1 then "#{n} great student" else "#{n} great students" end
+end
+
+@width = 50
+
+def divider
+  puts "-------------".center(@width)
+end
+
+@loaded_filename = ""
+@default_filename = "students.csv"
+
+def header_menu
+  divider
+  puts "-- Student Directory".center(@width)
+  puts "-- Using file: #{@loaded_filename}".center(@width)
+  divider
+end
+
 def interactive_main_menu
     students = []
     loop do
@@ -40,13 +53,15 @@ def interactive_search_menu
 end
 
 def print_main_menu
+  header_menu
   puts
-  puts "1.  Input the students"
-  puts "2.  Show the students"
-  puts "3.  Search the students"
-  puts "4.  Save the list to students.csv"
-  puts "5.  Load the list from students.csv"
-  puts "9.  Exit"  
+  puts "*** MAIN MENU"
+  puts  "1.  Input students"
+  puts  "2.  Show students"
+  puts  "3.  Search students"
+  puts  "4.  Save the list to students.csv"
+  puts  "5.  Load the list from students.csv"
+  puts  "9.  Exit" 
   puts
 end
 
@@ -201,7 +216,7 @@ def input_students
     file.close
   end
   
-  def load_students(filename = "students.csv")
+  def load_students(filename = @default_filename)
     file = File.open(filename, "r")
     file.readlines.each do |line|
     name, cohort, country_of_birth, hobbies = line.chomp.split(',')
@@ -214,12 +229,13 @@ def input_students
     filename = ARGV.first     # first argument from the command line
     if filename.nil?
         puts
-        puts "Loaded the default file: students.csv"
+        puts "Loaded the default file: #{@default_filename}"
         puts
+        @loaded_filename = @default_filename
         load_students
     elsif File.exists?(filename) # if it exists
+      @loaded_filename = filename
       load_students(filename)
-        puts "Loaded #{@students.count} from #{filename}".center(@width)
     else      # if it doesn't exist
       puts "Sorry, #{filename} doesn't exist."
       exit    # quit the program
@@ -229,7 +245,7 @@ def input_students
   def print_header
     if !@students.empty?
         puts "The students of Villains Academy".center(@width)
-        puts "-------------".center(@width)
+        divider
     else
     end
   end
