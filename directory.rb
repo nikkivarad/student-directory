@@ -209,19 +209,18 @@ def input_students
   end
 
   def save_students(filename = @default_filename)
-    puts "Please enter the filename (eg. data.csv)"
-    filename = gets.chomp
     # open the file for writing
     file = File.open(filename, "w") do |file|
     # iterate over the array of students
-    @students.each do |student|
-      student_data = [student[:name], student[:cohort], student[:country_of_birth], student[:hobbies]]
-      csv_line = student_data.join(",")
-      file.puts csv_line
+      @students.each do |student|
+        student_data = [student[:name], student[:cohort], student[:country_of_birth], student[:hobbies]]
+        csv_line = student_data.join(",")
+        file.puts csv_line
+      end
+      puts
+      puts  "*** Saved successfully to #{filename} ***"
+      puts
     end
-    puts
-    puts  "*** Saved successfully to #{filename} ***"
-    puts
   end
   
   def load_students(filename = @default_filename)
@@ -229,13 +228,14 @@ def input_students
       file.readlines.each do |line|
       name, cohort, country_of_birth, hobbies = line.chomp.split(',')
       add_student(name, cohort, country_of_birth, hobbies)
+      end
+      puts
+      puts  "*** File loaded successfully ***"
+      puts  "*** Using: #{filename}"
+      puts
     end
-    puts
-    puts  "*** File loaded successfully ***"
-    puts  "*** Using: #{filename}"
-    puts
   end
-  
+
   def try_load_students
     filename = ARGV.first     # first argument from the command line
     if filename.nil?
