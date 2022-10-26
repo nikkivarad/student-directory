@@ -227,19 +227,6 @@ def input_students
       puts
     end
   end
-  
-  def load_students(filename = @default_filename)
-    file = File.open(filename, "r") do |file|
-      file.readlines.each do |line|
-      name, cohort, country_of_birth, hobbies = line.chomp.split(',')
-      add_student(name, cohort, country_of_birth, hobbies)
-      end
-      puts
-      puts  "*** File loaded successfully ***"
-      puts  "*** Using: #{filename}"
-      puts
-    end
-  end
 
   def try_load_students
     filename = ARGV.first     # first argument from the command line
@@ -258,6 +245,20 @@ def input_students
     end
   end
 
+  def load_students(filename = @default_filename)
+    file = File.open(filename, "r") do |file|
+      file.readlines.each do |line|
+      name, cohort, country_of_birth, hobbies = line.chomp.split(',')
+      add_student(name, cohort, country_of_birth, hobbies)
+      end
+      puts
+      puts  "*** File loaded successfully ***"
+      puts  "*** Using: #{filename}"
+      puts
+    end
+  end
+
+
   def print_header
     if !@students.empty?
         puts "The students of Villains Academy".center(@width)
@@ -266,6 +267,7 @@ def input_students
     end
   end
   
+
 def print_students_list
   if @students.empty?
         puts "No students available".center(@width)
@@ -294,7 +296,6 @@ def print_students_list
     end
   end
 
-# OPTIONAL - Clean code and fix problem with puts statements in search methods
   def search_by_first_letter
     if @students.empty?
         puts "No students available".center(@width)
