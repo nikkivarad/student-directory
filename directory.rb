@@ -38,7 +38,6 @@ def header_menu
 end
 
 def interactive_main_menu
-    students = []
     loop do
       print_main_menu
       process_main_menu(STDIN.gets.chomp)
@@ -96,13 +95,14 @@ def process_main_menu(selection)
   when "3"
     interactive_search_menu
   when "4"
-    save_students
+    puts  "Please enter the name of the file (eg. data.csv)"
+    save_filename = gets.chomp
+    save_filename.empty? ? save_students : save_students(save_filename)
   when "5"
-    puts "Please enter the name of the file (eg data.csv)" 
-    puts  "or leave empty to open the default file, students.csv"
+    puts  "Please enter the name of the file (eg. data.csv)" 
+    puts  "or leave empty to open the default file"
     load_filename = gets.chomp
-    load_filename.empty? ? load_students :
-    load_students(load_filename)
+    load_filename.empty? ? load_students : load_students(load_filename)
   when "9"
     exit #this will cause the program to terminate
   else
@@ -208,7 +208,7 @@ def input_students
     @students << {name: name, cohort: cohort.to_sym, country_of_birth: country_of_birth, hobbies: hobbies}
   end
 
-  def save_students
+  def save_students(filename = @default_filename)
     puts "Please enter the filename (eg. data.csv)"
     filename = gets.chomp
     # open the file for writing
@@ -250,7 +250,7 @@ def input_students
       @loaded_filename = filename
       load_students(filename)
     else      # if it doesn't exist
-      puts "Sorry, #{filename} doesn't exist."
+      puts "Sorry, #{filename} not found."
       exit    # quit the program
     end
   end
